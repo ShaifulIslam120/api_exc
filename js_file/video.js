@@ -7,18 +7,25 @@ const loadCatagories=() =>{
     .catch((error)=> console.log(error));
 }
 // load videos
-
+const loadcatagoryvideo=(id) =>{
+    fetch(`https://openapi.programming-hero.com/api/phero-tube/category/${id}`)
+    .then((res) => res.json())
+    .then((data) => displayVideos(data.category))
+    .catch((error)=> console.log(error));
+}
 // diplay catagories
 const displayCatagories=(catagories) =>{
     const catagorieselement=document.getElementById("Catagories")
    catagories.forEach((item)=>{
     console.log(item);
 //   create button
-     const button= document.createElement("button")
-     button.classList="btn"
-     button.innerHTML=item.category
-    //  add button
-    catagorieselement.append(button)
+     const buttonconatiner= document.createElement("button")
+    buttonconatiner.innerHTML=`
+    <button class="btn" onclick=loadcatagoryvideo(${item.category_id})>
+    ${item.category}
+    </button>
+    `
+    catagorieselement.append(buttonconatiner)
    })
 }
 const loadVideos=() =>{
@@ -36,6 +43,7 @@ function getstringtimes(time){
 }
 const displayVideos= (videos) =>{
     const videoContainer=document.getElementById("videos")
+    videoContainer.innerHTML=""
     videos.forEach((Video)=>{
         console.log(Video);
         const card=document.createElement("div")
