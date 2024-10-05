@@ -27,6 +27,13 @@ const loadVideos=() =>{
     .then((data) => displayVideos(data.videos))
     .catch((error)=> console.log(error));
 }
+function getstringtimes(time){
+    const hour=parseInt(time/3600)
+    let remainderSecond= time%3600
+    const minitue =parseInt(remainderSecond/60)
+    remainderSecond= remainderSecond%60
+    return `${hour} hour ${minitue} minitue ${remainderSecond} second ago`
+}
 const displayVideos= (videos) =>{
     const videoContainer=document.getElementById("videos")
     videos.forEach((Video)=>{
@@ -39,7 +46,8 @@ const displayVideos= (videos) =>{
       src=${Video.thumbnail
       }
       alt="Shoes" class="w-full h-full object-cover" />
-      <span class="absolute bg-black text-white right-2 bottom-2">${Video.others.posted_date}</span>
+      ${Video.others.posted_date?.length==0 ? "": `<span class="absolute bg-black text-white text-xs right-2 bottom-2">${ getstringtimes(Video.others.posted_date)}</span>`}
+      
   </figure>
   <div class="px-0 py-2 gap-2 flex">
     <div >
